@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-pull-request-reviewers-table
+      author: Iakov Lysenko
+      changes:
+        - createTable:
+            tableName: pull_request_reviewers
+            columns:
+              - column:
+                  name: pull_request_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reviewer_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: pull_request_reviewers
+            columnNames: pull_request_id, reviewer_id
+            constraintName: pk_pull_request_reviewers
+        - addForeignKeyConstraint:
+            baseTableName: pull_request_reviewers
+            baseColumnNames: pull_request_id
+            constraintName: fk_pr_reviewers_pr
+            referencedTableName: pull_requests
+            referencedColumnNames: pull_request_id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: pull_request_reviewers
+            baseColumnNames: reviewer_id
+            constraintName: fk_pr_reviewers_user
+            referencedTableName: users
+            referencedColumnNames: user_id
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+        - createIndex:
+            indexName: idx_pr_reviewers_reviewer_id
+            tableName: pull_request_reviewers
+            columns:
+              - column:
+                  name: reviewer_id
+        - createIndex:
+            indexName: idx_pr_reviewers_pr_id
+            tableName: pull_request_reviewers
+            columns:
+              - column:
+                  name: pull_request_id
+      rollback:
+        - dropTable:
+            tableName: pull_request_reviewers
+

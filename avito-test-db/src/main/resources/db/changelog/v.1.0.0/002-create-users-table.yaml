@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-users-table
+      author: Iakov Lysenko
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: user_id
+                  type: VARCHAR(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: team_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: users
+            baseColumnNames: team_name
+            constraintName: fk_users_team
+            referencedTableName: teams
+            referencedColumnNames: team_name
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+        - createIndex:
+            indexName: idx_users_team_name
+            tableName: users
+            columns:
+              - column:
+                  name: team_name
+        - createIndex:
+            indexName: idx_users_is_active
+            tableName: users
+            columns:
+              - column:
+                  name: is_active
+      rollback:
+        - dropTable:
+            tableName: users
+
