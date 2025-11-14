@@ -8,12 +8,12 @@ databaseChangeLog:
             columns:
               - column:
                   name: pull_request_id
-                  type: VARCHAR(255)
+                  type: UUID
                   constraints:
                     nullable: false
               - column:
                   name: reviewer_id
-                  type: VARCHAR(255)
+                  type: UUID
                   constraints:
                     nullable: false
               - column:
@@ -31,7 +31,7 @@ databaseChangeLog:
             baseColumnNames: pull_request_id
             constraintName: fk_pr_reviewers_pr
             referencedTableName: pull_requests
-            referencedColumnNames: pull_request_id
+            referencedColumnNames: id
             onDelete: CASCADE
             onUpdate: CASCADE
         - addForeignKeyConstraint:
@@ -39,7 +39,7 @@ databaseChangeLog:
             baseColumnNames: reviewer_id
             constraintName: fk_pr_reviewers_user
             referencedTableName: users
-            referencedColumnNames: user_id
+            referencedColumnNames: id
             onDelete: RESTRICT
             onUpdate: CASCADE
         - createIndex:

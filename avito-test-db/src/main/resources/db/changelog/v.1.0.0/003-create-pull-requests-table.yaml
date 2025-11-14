@@ -7,8 +7,8 @@ databaseChangeLog:
             tableName: pull_requests
             columns:
               - column:
-                  name: pull_request_id
-                  type: VARCHAR(255)
+                  name: id
+                  type: UUID
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -20,7 +20,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: author_id
-                  type: VARCHAR(255)
+                  type: UUID
                   constraints:
                     nullable: false
               - column:
@@ -48,7 +48,7 @@ databaseChangeLog:
             baseColumnNames: author_id
             constraintName: fk_pull_requests_author
             referencedTableName: users
-            referencedColumnNames: user_id
+            referencedColumnNames: id
             onDelete: RESTRICT
             onUpdate: CASCADE
         - createIndex:
