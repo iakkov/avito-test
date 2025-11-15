@@ -189,13 +189,11 @@ public class PullRequestServiceImpl implements PullRequestService {
         
         log.info("Ревьювер успешно переназначен: {} -> {} для PR {}", 
                 oldUserId, newReviewer.getId(), pullRequestId);
-        
-        ReassignResponse response = new ReassignResponse(
+
+        return new ReassignResponse(
                 pullRequestMapper.toResponse(pullRequest),
                 newReviewer.getId()
         );
-        
-        return response;
     }
 
 }

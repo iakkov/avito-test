@@ -62,14 +62,12 @@ public class TeamServiceImpl implements TeamService {
                         existingUser.setTeam(finalTeam);
                         return existingUser;
                     })
-                    .orElseGet(() -> {
-                        return User.builder()
-                                .id(userId)
-                                .username(username)
-                                .isActive(isActive)
-                                .team(finalTeam)
-                                .build();
-                    });
+                    .orElseGet(() -> User.builder()
+                            .id(userId)
+                            .username(username)
+                            .isActive(isActive)
+                            .team(finalTeam)
+                            .build());
             
             user = userRepository.save(user);
             members.add(user);

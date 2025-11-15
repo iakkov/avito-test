@@ -57,13 +57,12 @@ class UserServiceImplTest {
     private UserServiceImpl userService;
 
     private User user;
-    private Team team;
     private PullRequest pullRequest;
     private SetIsActiveRequest setIsActiveRequest;
 
     @BeforeEach
     void setUp() {
-        team = Team.builder()
+        Team team = Team.builder()
                 .teamName("TestTeam")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
