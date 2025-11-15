@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.iakovlysenko.contest.avitotestdomain.entity.PullRequest;
-import ru.iakovlysenko.contest.avitotestdomain.entity.PullRequestReviewer;
-import ru.iakovlysenko.contest.avitotestdomain.entity.User;
-import ru.iakovlysenko.contest.avitotestdomain.enums.PrStatus;
-import ru.iakovlysenko.contest.avitotestdomain.repository.PullRequestRepository;
-import ru.iakovlysenko.contest.avitotestdomain.repository.PullRequestReviewerRepository;
-import ru.iakovlysenko.contest.avitotestdomain.repository.UserRepository;
+import ru.iakovlysenko.contest.entity.PullRequest;
+import ru.iakovlysenko.contest.entity.PullRequestReviewer;
+import ru.iakovlysenko.contest.entity.User;
+import ru.iakovlysenko.contest.enums.PrStatus;
+import ru.iakovlysenko.contest.repository.PullRequestRepository;
+import ru.iakovlysenko.contest.repository.PullRequestReviewerRepository;
+import ru.iakovlysenko.contest.repository.UserRepository;
 import ru.iakovlysenko.contest.dto.request.CreatePullRequestRequest;
 import ru.iakovlysenko.contest.dto.request.MergePullRequestRequest;
 import ru.iakovlysenko.contest.dto.request.ReassignRequest;
@@ -51,17 +51,17 @@ public class PullRequestServiceImpl implements PullRequestService {
     @Override
     @Transactional
     public PullRequestResponse createPullRequest(CreatePullRequestRequest request) {
-        log.info("Creating pull request: {}", request.pullRequestId());
+        log.info("Создание пулл реквеста: {}", request.pullRequestId());
         
         if (pullRequestRepository.existsById(request.pullRequestId())) {
             throw new PrExistsException(request.pullRequestId());
         }
         
         User author = userRepository.findById(request.authorId())
-                .orElseThrow(() -> new NotFoundException("Author not found: " + request.authorId()));
+                .orElseThrow(() -> new NotFoundException("Автор не найден: " + request.authorId()));
         
         if (!author.getIsActive()) {
-            throw new NotFoundException("Author is not active: " + request.authorId());
+            throw new NotFoundException("Автор не активен: " + request.authorId());
         }
         
         PullRequest pullRequest = PullRequest.builder()
@@ -102,9 +102,9 @@ public class PullRequestServiceImpl implements PullRequestService {
         entityManager.clear();
 
         pullRequest = pullRequestRepository.findByIdWithReviewers(pullRequestId)
-                .orElseThrow(() -> new NotFoundException("Pull request not found: " + pullRequestId));
+                .orElseThrow(() -> new NotFoundException("Пулл реквест не найден: " + pullRequestId));
         
-        log.info("Pull request created successfully: {} with {} reviewers", 
+        log.info("Пулл реквест успешно создан: {} с {} ревьюверами", 
                 request.pullRequestId(), selectedReviewers.size());
         
         return pullRequestMapper.toResponse(pullRequest);
@@ -113,16 +113,16 @@ public class PullRequestServiceImpl implements PullRequestService {
     @Override
     @Transactional
     public PullRequestResponse mergePullRequest(MergePullRequestRequest request) {
-        log.info("Merging pull request: {}", request.pullRequestId());
+        log.info("Слияние пулл реквеста: {}", request.pullRequestId());
         
         final String pullRequestId = request.pullRequestId();
         PullRequest pullRequest = pullRequestRepository.findById(pullRequestId)
-                .orElseThrow(() -> new NotFoundException("Pull request not found: " + pullRequestId));
+                .orElseThrow(() -> new NotFoundException("Пулл реквест не найден: " + pullRequestId));
         
         if (pullRequest.getStatus() == PrStatus.MERGED) {
-            log.info("Pull request {} is already merged", pullRequestId);
+            log.info("Пулл реквест {} уже слит", pullRequestId);
             pullRequest = pullRequestRepository.findByIdWithReviewers(pullRequestId)
-                    .orElseThrow(() -> new NotFoundException("Pull request not found: " + pullRequestId));
+                    .orElseThrow(() -> new NotFoundException("Пулл реквест не найден: " + pullRequestId));
             return pullRequestMapper.toResponse(pullRequest);
         }
         
@@ -130,23 +130,23 @@ public class PullRequestServiceImpl implements PullRequestService {
         pullRequest = pullRequestRepository.save(pullRequest);
         
         pullRequest = pullRequestRepository.findByIdWithReviewers(pullRequestId)
-                .orElseThrow(() -> new NotFoundException("Pull request not found: " + pullRequestId));
+                .orElseThrow(() -> new NotFoundException("Пулл реквест не найден: " + pullRequestId));
         
-        log.info("Pull request merged successfully: {}", request.pullRequestId());
+        log.info("Пулл реквест успешно слит: {}", request.pullRequestId());
         return pullRequestMapper.toResponse(pullRequest);
     }
     
     @Override
     @Transactional
     public ReassignResponse reassignReviewer(ReassignRequest request) {
-        log.info("Reassigning reviewer {} for pull request {}", 
+        log.info("Переназначение ревьювера {} для пулл реквеста {}", 
                 request.oldUserId(), request.pullRequestId());
         
         final String pullRequestId = request.pullRequestId();
         final String oldUserId = request.oldUserId();
         
         PullRequest pullRequest = pullRequestRepository.findByIdWithReviewers(pullRequestId)
-                .orElseThrow(() -> new NotFoundException("Pull request not found: " + pullRequestId));
+                .orElseThrow(() -> new NotFoundException("Пулл реквест не найден: " + pullRequestId));
         
         if (pullRequest.getStatus() == PrStatus.MERGED) {
             throw new PrMergedException(pullRequestId);
@@ -162,12 +162,12 @@ public class PullRequestServiceImpl implements PullRequestService {
         }
         
         User oldReviewer = userRepository.findById(oldUserId)
-                .orElseThrow(() -> new NotFoundException("Reviewer not found: " + oldUserId));
+                .orElseThrow(() -> new NotFoundException("Ревьювер не найден: " + oldUserId));
         
         List<User> candidateReviewers = userRepository.findActiveTeamMembersExcludingUser(oldReviewer.getId());
         
         if (candidateReviewers.isEmpty()) {
-            throw new NoCandidateException("no active replacement candidate in team");
+            throw new NoCandidateException("нет активного кандидата для замены в команде");
         }
         
         User newReviewer = candidateReviewers.get(RANDOM.nextInt(candidateReviewers.size()));
@@ -185,9 +185,9 @@ public class PullRequestServiceImpl implements PullRequestService {
         pullRequestReviewerRepository.save(newReviewerAssignment);
         
         pullRequest = pullRequestRepository.findByIdWithReviewers(pullRequestId)
-                .orElseThrow(() -> new NotFoundException("Pull request not found: " + pullRequestId));
+                .orElseThrow(() -> new NotFoundException("Пулл реквест не найден: " + pullRequestId));
         
-        log.info("Reviewer reassigned successfully: {} -> {} for PR {}", 
+        log.info("Ревьювер успешно переназначен: {} -> {} для PR {}", 
                 oldUserId, newReviewer.getId(), pullRequestId);
         
         ReassignResponse response = new ReassignResponse(

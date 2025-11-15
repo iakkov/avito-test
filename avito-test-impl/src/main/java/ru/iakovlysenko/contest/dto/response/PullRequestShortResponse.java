@@ -1,7 +1,7 @@
 package ru.iakovlysenko.contest.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.iakovlysenko.contest.avitotestdomain.enums.PrStatus;
+import ru.iakovlysenko.contest.enums.PrStatus;
 
 /**
  * ДТО ответа с краткой информацией о пулл реквесте.

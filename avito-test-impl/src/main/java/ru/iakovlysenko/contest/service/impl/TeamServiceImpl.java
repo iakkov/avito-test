@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.iakovlysenko.contest.avitotestdomain.entity.Team;
-import ru.iakovlysenko.contest.avitotestdomain.entity.User;
-import ru.iakovlysenko.contest.avitotestdomain.repository.TeamRepository;
-import ru.iakovlysenko.contest.avitotestdomain.repository.UserRepository;
+import ru.iakovlysenko.contest.entity.Team;
+import ru.iakovlysenko.contest.entity.User;
+import ru.iakovlysenko.contest.repository.TeamRepository;
+import ru.iakovlysenko.contest.repository.UserRepository;
 import ru.iakovlysenko.contest.dto.request.TeamRequest;
 import ru.iakovlysenko.contest.dto.response.TeamResponse;
 import ru.iakovlysenko.contest.exception.NotFoundException;
@@ -35,7 +35,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     @Transactional
     public TeamResponse createTeam(TeamRequest request) {
-        log.info("Creating team: {}", request.teamName());
+        log.info("Создание команды: {}", request.teamName());
         
         if (teamRepository.existsByTeamName(request.teamName())) {
             throw new TeamExistsException(request.teamName());
@@ -77,17 +77,17 @@ public class TeamServiceImpl implements TeamService {
         
         team.setMembers(members);
         
-        log.info("Team created successfully: {}", request.teamName());
+        log.info("Команда успешно создана: {}", request.teamName());
         return teamMapper.toResponse(team);
     }
     
     @Override
     @Transactional(readOnly = true)
     public TeamResponse getTeam(String teamName) {
-        log.info("Getting team: {}", teamName);
+        log.info("Получение команды: {}", teamName);
         
         Team team = teamRepository.findByTeamName(teamName)
-                .orElseThrow(() -> new NotFoundException("Team not found: " + teamName));
+                .orElseThrow(() -> new NotFoundException("Команда не найдена: " + teamName));
         
         List<User> members = userRepository.findByTeamName(teamName);
         team.setMembers(members);

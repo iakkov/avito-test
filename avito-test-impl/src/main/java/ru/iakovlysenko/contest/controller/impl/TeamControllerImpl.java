@@ -25,7 +25,7 @@ public class TeamControllerImpl implements TeamControllerApi {
     
     @Override
     public ResponseEntity<TeamWrapperResponse> createTeam(@Valid @RequestBody TeamRequest request) {
-        log.info("POST /team/add - Creating team: {}", request.teamName());
+        log.info("POST /team/add - Создание команды: {}", request.teamName());
         
         TeamResponse teamResponse = teamService.createTeam(request);
         
@@ -36,7 +36,7 @@ public class TeamControllerImpl implements TeamControllerApi {
     
     @Override
     public ResponseEntity<TeamResponse> getTeam(@RequestParam("team_name") String teamName) {
-        log.info("GET /team/get - Getting team: {}", teamName);
+        log.info("GET /team/get - Получение команды: {}", teamName);
         
         TeamResponse teamResponse = teamService.getTeam(teamName);
         

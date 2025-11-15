@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.iakovlysenko.contest.avitotestdomain.entity.PullRequest;
-import ru.iakovlysenko.contest.avitotestdomain.entity.User;
-import ru.iakovlysenko.contest.avitotestdomain.repository.PullRequestRepository;
-import ru.iakovlysenko.contest.avitotestdomain.repository.UserRepository;
+import ru.iakovlysenko.contest.entity.PullRequest;
+import ru.iakovlysenko.contest.entity.User;
+import ru.iakovlysenko.contest.repository.PullRequestRepository;
+import ru.iakovlysenko.contest.repository.UserRepository;
 import ru.iakovlysenko.contest.dto.request.SetIsActiveRequest;
 import ru.iakovlysenko.contest.dto.response.GetReviewResponse;
 import ru.iakovlysenko.contest.dto.response.UserResponse;
@@ -37,25 +37,25 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponse setIsActive(SetIsActiveRequest request) {
-        log.info("Setting isActive for user {} to {}", request.userId(), request.isActive());
+        log.info("Установка флага активности для пользователя {} в {}", request.userId(), request.isActive());
         
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new NotFoundException("User not found: " + request.userId()));
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден: " + request.userId()));
         
         user.setIsActive(request.isActive());
         user = userRepository.save(user);
         
-        log.info("User {} isActive set to {}", request.userId(), request.isActive());
+        log.info("Флаг активности пользователя {} установлен в {}", request.userId(), request.isActive());
         return userMapper.toResponse(user);
     }
     
     @Override
     @Transactional(readOnly = true)
     public GetReviewResponse getReview(String userId) {
-        log.info("Getting review for user: {}", userId);
+        log.info("Получение ревью для пользователя: {}", userId);
         
         if (!userRepository.existsById(userId)) {
-            throw new NotFoundException("User not found: " + userId);
+            throw new NotFoundException("Пользователь не найден: " + userId);
         }
         
         List<PullRequest> pullRequests = pullRequestRepository.findByReviewerIdWithDetails(userId);
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
                         .collect(Collectors.toList())
         );
         
-        log.info("Found {} PRs for reviewer {}", pullRequests.size(), userId);
+        log.info("Найдено {} PR для ревьювера {}", pullRequests.size(), userId);
         return response;
     }
 

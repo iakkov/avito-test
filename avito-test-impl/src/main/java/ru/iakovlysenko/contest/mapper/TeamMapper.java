@@ -2,7 +2,7 @@ package ru.iakovlysenko.contest.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-import ru.iakovlysenko.contest.avitotestdomain.entity.Team;
+import ru.iakovlysenko.contest.entity.Team;
 import ru.iakovlysenko.contest.dto.response.TeamResponse;
 
 /**

@@ -28,7 +28,7 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     @Override
     public ResponseEntity<PullRequestWrapperResponse> createPullRequest(
             @Valid @RequestBody CreatePullRequestRequest request) {
-        log.info("POST /pullRequest/create - Creating pull request: {}", request.pullRequestId());
+        log.info("POST /pullRequest/create - Создание пулл реквеста: {}", request.pullRequestId());
         
         var prResponse = pullRequestService.createPullRequest(request);
         
@@ -40,7 +40,7 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     @Override
     public ResponseEntity<PullRequestWrapperResponse> mergePullRequest(
             @Valid @RequestBody MergePullRequestRequest request) {
-        log.info("POST /pullRequest/merge - Merging pull request: {}", request.pullRequestId());
+        log.info("POST /pullRequest/merge - Слияние пулл реквеста: {}", request.pullRequestId());
         
         var prResponse = pullRequestService.mergePullRequest(request);
         
@@ -52,7 +52,7 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     @Override
     public ResponseEntity<ReassignResponse> reassignReviewer(
             @Valid @RequestBody ReassignRequest request) {
-        log.info("POST /pullRequest/reassign - Reassigning reviewer {} for PR {}", 
+        log.info("POST /pullRequest/reassign - Переназначение ревьювера {} для PR {}", 
                 request.oldUserId(), request.pullRequestId());
         
         ReassignResponse response = pullRequestService.reassignReviewer(request);

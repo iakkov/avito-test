@@ -1,7 +1,7 @@
 package ru.iakovlysenko.contest.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.iakovlysenko.contest.avitotestdomain.enums.PrStatus;
+import ru.iakovlysenko.contest.enums.PrStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

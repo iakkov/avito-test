@@ -24,7 +24,7 @@ public class UserControllerImpl implements UserControllerApi {
     
     @Override
     public ResponseEntity<UserWrapperResponse> setIsActive(@Valid @RequestBody SetIsActiveRequest request) {
-        log.info("POST /users/setIsActive - Setting isActive for user {} to {}", 
+        log.info("POST /users/setIsActive - Установка флага активности для пользователя {} в {}", 
                 request.userId(), request.isActive());
         
         var userResponse = userService.setIsActive(request);
@@ -36,7 +36,7 @@ public class UserControllerImpl implements UserControllerApi {
     
     @Override
     public ResponseEntity<GetReviewResponse> getReview(@RequestParam("user_id") String userId) {
-        log.info("GET /users/getReview - Getting review for user: {}", userId);
+        log.info("GET /users/getReview - Получение ревью для пользователя: {}", userId);
         
         GetReviewResponse response = userService.getReview(userId);
         

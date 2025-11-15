@@ -3,7 +3,7 @@ package ru.iakovlysenko.contest.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import ru.iakovlysenko.contest.avitotestdomain.entity.PullRequest;
+import ru.iakovlysenko.contest.entity.PullRequest;
 import ru.iakovlysenko.contest.dto.response.PullRequestResponse;
 import ru.iakovlysenko.contest.dto.response.PullRequestShortResponse;
 
