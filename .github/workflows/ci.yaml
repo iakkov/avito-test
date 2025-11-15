@@ -18,26 +18,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Set up JDK 17
+      - name: Set up JDK 17 + Maven cache
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
           cache: maven
 
-      - name: Make Maven wrapper executable
-        run: chmod +x mvnw
+      - name: Enable Docker (needed for Testcontainers)
+        run: |
+          sudo systemctl start docker
+          docker info
 
-      - name: Validate Docker availability
-        run: docker info
+      - name: Run unit + integration tests
+        run: mvn -B -ntp verify
 
-      - name: Build application image
+      - name: Build Docker image
         run: docker build -t avito-test-app .
 
-      - name: Run unit and integration tests
-        env:
-          MAVEN_OPTS: "-Dmaven.repo.local=${{ github.workspace }}/.m2/repository"
-        run: ./mvnw -B -ntp verify
