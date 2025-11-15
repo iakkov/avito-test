@@ -13,8 +13,12 @@ import ru.iakovlysenko.contest.avitotestdomain.enums.PrStatus;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+/**
+ * Сущность, представляющая пулл реквест.
+ *
+ * @author Iakov Lysenko
+ */
 @Entity
 @Table(name = "pull_requests", indexes = {
     @Index(name = "idx_pull_requests_author_id", columnList = "author_id"),
@@ -29,32 +33,53 @@ import java.util.UUID;
 @Builder
 public class PullRequest {
 
+    /**
+     * Уникальный идентификатор.
+     */
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", length = 255)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private UUID id;
+    private String id;
 
+    /**
+     * Название пулл реквеста.
+     */
     @ToString.Include
     @Column(name = "pull_request_name", nullable = false, length = 255)
     private String pullRequestName;
 
+    /**
+     * Автор пулл реквеста.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false, foreignKey = @ForeignKey(name = "fk_pull_requests_author"))
     private User author;
 
+    /**
+     * Статус пулл реквеста.
+     */
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     @Builder.Default
     private PrStatus status = PrStatus.OPEN;
 
+    /**
+     * Время, когда пулл реквест создан.
+     */
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    /**
+     * Время, когда пулл реквест замерджен.
+     */
     @Column(name = "merged_at")
     private LocalDateTime mergedAt;
 
-    @OneToMany(mappedBy = "pullRequest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    /**
+     * Ревьюверы пулл реквеста
+     */
+    @OneToMany(mappedBy = "pullRequest", fetch = FetchType.LAZY)
     @Builder.Default
     private List<PullRequestReviewer> reviewers = new ArrayList<>();
 
@@ -70,11 +95,21 @@ public class PullRequest {
         }
     }
 
-    public UUID getAuthorId() {
+    /**
+     * Получает идентификатор автора пулл реквеста.
+     *
+     * @return идентификатор автора или null, если автор не установлен
+     */
+    public String getAuthorId() {
         return author != null ? author.getId() : null;
     }
 
-    public List<UUID> getAssignedReviewerIds() {
+    /**
+     * Получает список идентификаторов назначенных ревьюверов.
+     *
+     * @return список идентификаторов ревьюверов
+     */
+    public List<String> getAssignedReviewerIds() {
         return reviewers.stream()
                 .map(PullRequestReviewer::getReviewerId)
                 .toList();

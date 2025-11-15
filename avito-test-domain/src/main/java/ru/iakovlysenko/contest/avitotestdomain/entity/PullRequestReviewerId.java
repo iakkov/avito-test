@@ -6,19 +6,29 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
 
+/**
+ * Составной ключ для сущности {@link PullRequestReviewer}.
+ *
+ * @author Iakov Lysenko
+ */
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PullRequestReviewerId implements Serializable {
 
+    /**
+     * Идентификатор пулл реквеста.
+     */
     @EqualsAndHashCode.Include
-    private UUID pullRequestId;
+    private String pullRequestId;
 
+    /**
+     * Идентификатор ревьювера.
+     */
     @EqualsAndHashCode.Include
-    private UUID reviewerId;
+    private String reviewerId;
 
 }
 

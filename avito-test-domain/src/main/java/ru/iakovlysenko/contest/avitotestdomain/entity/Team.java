@@ -13,6 +13,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сущность, представляющая команду.
+ *
+ * @author Iakov Lysenko
+ */
 @Entity
 @Table(name = "teams")
 @Getter
@@ -24,18 +29,30 @@ import java.util.List;
 @Builder
 public class Team {
 
+    /**
+     * Уникальное название команды.
+     */
     @Id
     @EqualsAndHashCode.Include
     @ToString.Include
     @Column(name = "team_name", length = 255)
     private String teamName;
 
+    /**
+     * Время, когда команда создана.
+     */
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    /**
+     * Время, когда команда обновлена.
+     */
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    /**
+     * Участники команды.
+     */
     @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @Builder.Default
     private List<User> members = new ArrayList<>();
