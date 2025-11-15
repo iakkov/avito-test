@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Iakov Lysenko
  */
 @WebMvcTest(controllers = TeamControllerImpl.class)
-@ContextConfiguration(classes = TestApplication.class)
 @Import(GlobalExceptionHandler.class)
 @DisplayName("Тесты для TeamControllerImpl")
 class TeamControllerImplTest {

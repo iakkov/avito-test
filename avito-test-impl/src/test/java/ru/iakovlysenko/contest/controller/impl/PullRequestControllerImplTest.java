@@ -33,7 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Iakov Lysenko
  */
 @WebMvcTest(controllers = PullRequestControllerImpl.class)
-@ContextConfiguration(classes = TestApplication.class)
 @Import(GlobalExceptionHandler.class)
 @DisplayName("Тесты для PullRequestControllerImpl")
 class PullRequestControllerImplTest {

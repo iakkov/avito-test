@@ -32,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Iakov Lysenko
  */
 @WebMvcTest(controllers = UserControllerImpl.class)
-@ContextConfiguration(classes = TestApplication.class)
 @Import(GlobalExceptionHandler.class)
 @DisplayName("Тесты для UserControllerImpl")
 class UserControllerImplTest {
