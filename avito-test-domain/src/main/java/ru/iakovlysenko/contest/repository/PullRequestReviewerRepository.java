@@ -7,6 +7,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.iakovlysenko.contest.entity.PullRequestReviewer;
 import ru.iakovlysenko.contest.entity.PullRequestReviewerId;
+import ru.iakovlysenko.contest.projection.PullRequestReviewersCountProjection;
+import ru.iakovlysenko.contest.projection.ReviewerAssignmentCountProjection;
+
+import java.util.List;
 
 /**
  * Репозиторий для {@link PullRequestReviewer}
@@ -34,5 +38,23 @@ public interface PullRequestReviewerRepository extends JpaRepository<PullRequest
     @Modifying
     @Query("DELETE FROM PullRequestReviewer prr WHERE prr.pullRequestId = :pullRequestId AND prr.reviewerId = :reviewerId")
     void deleteByPullRequestIdAndReviewerId(@Param("pullRequestId") String pullRequestId, @Param("reviewerId") String reviewerId);
+
+    /**
+     * Получение количества назначений для каждого ревьювера.
+     *
+     * @return список проекций с идентификатором ревьювера и количеством назначений
+     */
+    @Query("SELECT prr.reviewerId AS reviewerId, COUNT(prr) AS assignmentsCount "
+            + "FROM PullRequestReviewer prr GROUP BY prr.reviewerId")
+    List<ReviewerAssignmentCountProjection> countAssignmentsPerReviewer();
+
+    /**
+     * Получение количества ревьюверов для каждого пулл реквеста.
+     *
+     * @return список проекций с идентификатором пулл реквеста и количеством ревьюверов
+     */
+    @Query("SELECT prr.pullRequestId AS pullRequestId, COUNT(prr) AS reviewersCount "
+            + "FROM PullRequestReviewer prr GROUP BY prr.pullRequestId")
+    List<PullRequestReviewersCountProjection> countReviewersPerPullRequest();
 }
 
