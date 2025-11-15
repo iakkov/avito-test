@@ -1,6 +1,7 @@
 package ru.iakovlysenko.contest.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import ru.iakovlysenko.contest.enums.PrStatus;
 
 /**
@@ -8,6 +9,7 @@ import ru.iakovlysenko.contest.enums.PrStatus;
  *
  * @author Iakov Lysenko
  */
+@Builder
 public record PullRequestShortResponse(
         @JsonProperty("pull_request_id")
         String pullRequestId,

@@ -1,6 +1,7 @@
 package ru.iakovlysenko.contest.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  *
  * @author Iakov Lysenko
  */
+@Builder
 public record StatisticsResponse(
         @JsonProperty("assignments_by_user")
         List<UserAssignmentsStatistic> assignmentsByUser,

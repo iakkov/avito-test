@@ -1,6 +1,8 @@
 package ru.iakovlysenko.contest.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import ru.iakovlysenko.contest.dto.enums.ErrorCode;
 
 /**
@@ -8,6 +10,7 @@ import ru.iakovlysenko.contest.dto.enums.ErrorCode;
  *
  * @author Iakov Lysenko
  */
+@Builder
 public record ErrorResponse(
         @JsonProperty("error")
         ErrorDetail error
