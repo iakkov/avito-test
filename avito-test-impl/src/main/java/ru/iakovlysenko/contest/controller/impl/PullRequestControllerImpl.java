@@ -28,13 +28,11 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     @Override
     public ResponseEntity<PullRequestWrapperResponse> createPullRequest(
             @Valid @RequestBody CreatePullRequestRequest request) {
-        log.info("POST /pullRequest/create - Creating pull request: {}", request.getPullRequestId());
+        log.info("POST /pullRequest/create - Creating pull request: {}", request.pullRequestId());
         
         var prResponse = pullRequestService.createPullRequest(request);
         
-        PullRequestWrapperResponse response = PullRequestWrapperResponse.builder()
-                .pr(prResponse)
-                .build();
+        PullRequestWrapperResponse response = new PullRequestWrapperResponse(prResponse);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -42,13 +40,11 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     @Override
     public ResponseEntity<PullRequestWrapperResponse> mergePullRequest(
             @Valid @RequestBody MergePullRequestRequest request) {
-        log.info("POST /pullRequest/merge - Merging pull request: {}", request.getPullRequestId());
+        log.info("POST /pullRequest/merge - Merging pull request: {}", request.pullRequestId());
         
         var prResponse = pullRequestService.mergePullRequest(request);
         
-        PullRequestWrapperResponse response = PullRequestWrapperResponse.builder()
-                .pr(prResponse)
-                .build();
+        PullRequestWrapperResponse response = new PullRequestWrapperResponse(prResponse);
         
         return ResponseEntity.ok(response);
     }
@@ -57,7 +53,7 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     public ResponseEntity<ReassignResponse> reassignReviewer(
             @Valid @RequestBody ReassignRequest request) {
         log.info("POST /pullRequest/reassign - Reassigning reviewer {} for PR {}", 
-                request.getOldUserId(), request.getPullRequestId());
+                request.oldUserId(), request.pullRequestId());
         
         ReassignResponse response = pullRequestService.reassignReviewer(request);
         

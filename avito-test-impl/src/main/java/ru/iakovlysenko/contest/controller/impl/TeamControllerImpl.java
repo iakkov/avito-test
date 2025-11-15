@@ -25,13 +25,11 @@ public class TeamControllerImpl implements TeamControllerApi {
     
     @Override
     public ResponseEntity<TeamWrapperResponse> createTeam(@Valid @RequestBody TeamRequest request) {
-        log.info("POST /team/add - Creating team: {}", request.getTeamName());
+        log.info("POST /team/add - Creating team: {}", request.teamName());
         
         TeamResponse teamResponse = teamService.createTeam(request);
         
-        TeamWrapperResponse response = TeamWrapperResponse.builder()
-                .team(teamResponse)
-                .build();
+        TeamWrapperResponse response = new TeamWrapperResponse(teamResponse);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

@@ -25,13 +25,11 @@ public class UserControllerImpl implements UserControllerApi {
     @Override
     public ResponseEntity<UserWrapperResponse> setIsActive(@Valid @RequestBody SetIsActiveRequest request) {
         log.info("POST /users/setIsActive - Setting isActive for user {} to {}", 
-                request.getUserId(), request.getIsActive());
+                request.userId(), request.isActive());
         
         var userResponse = userService.setIsActive(request);
         
-        UserWrapperResponse response = UserWrapperResponse.builder()
-                .user(userResponse)
-                .build();
+        UserWrapperResponse response = new UserWrapperResponse(userResponse);
         
         return ResponseEntity.ok(response);
     }
