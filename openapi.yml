@@ -8,6 +8,7 @@ tags:
   - name: Users
   - name: PullRequests
   - name: Health
+  - name: Statistics
 
 components:
   parameters:
@@ -120,6 +121,36 @@ components:
         status:
           type: string
           enum: [OPEN, MERGED]
+    StatisticAssignmentsByUser:
+      type: object
+      required: [ user_id, assignments_count ]
+      properties:
+        user_id:
+          type: string
+        assignments_count:
+          type: integer
+          format: int64
+    StatisticReviewersPerPr:
+      type: object
+      required: [ pull_request_id, reviewers_count ]
+      properties:
+        pull_request_id:
+          type: string
+        reviewers_count:
+          type: integer
+          format: int64
+    Statistics:
+      type: object
+      required: [ assignments_by_user, reviewers_per_pr ]
+      properties:
+        assignments_by_user:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticAssignmentsByUser'
+        reviewers_per_pr:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticReviewersPerPr'
 
 paths:
   /team/add:
@@ -419,3 +450,21 @@ paths:
                     pull_request_name: Add search
                     author_id: u1
                     status: OPEN
+  /statistics:
+    get:
+      tags: [Statistics]
+      summary: Получить статистику назначений ревьюверов
+      responses:
+        '200':
+          description: Статистика назначений ревьюверов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+              example:
+                assignments_by_user:
+                  - user_id: u1
+                    assignments_count: 2
+                reviewers_per_pr:
+                  - pull_request_id: pr-1001
+                    reviewers_count: 2
