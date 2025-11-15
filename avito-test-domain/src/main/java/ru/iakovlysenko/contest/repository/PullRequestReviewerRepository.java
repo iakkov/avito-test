@@ -1,12 +1,12 @@
-package ru.iakovlysenko.contest.avitotestdomain.repository;
+package ru.iakovlysenko.contest.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.iakovlysenko.contest.avitotestdomain.entity.PullRequestReviewer;
-import ru.iakovlysenko.contest.avitotestdomain.entity.PullRequestReviewerId;
+import ru.iakovlysenko.contest.entity.PullRequestReviewer;
+import ru.iakovlysenko.contest.entity.PullRequestReviewerId;
 
 /**
  * Репозиторий для {@link PullRequestReviewer}

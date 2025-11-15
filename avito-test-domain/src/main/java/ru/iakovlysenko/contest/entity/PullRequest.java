@@ -1,4 +1,4 @@
-package ru.iakovlysenko.contest.avitotestdomain.entity;
+package ru.iakovlysenko.contest.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.iakovlysenko.contest.avitotestdomain.enums.PrStatus;
+import ru.iakovlysenko.contest.enums.PrStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

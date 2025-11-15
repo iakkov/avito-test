@@ -1,4 +1,4 @@
-package ru.iakovlysenko.contest.avitotestdomain.enums;
+package ru.iakovlysenko.contest.enums;
 
 /**
  * Статус пулл реквеста.

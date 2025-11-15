@@ -1,4 +1,4 @@
-package ru.iakovlysenko.contest.avitotestdomain.entity;
+package ru.iakovlysenko.contest.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

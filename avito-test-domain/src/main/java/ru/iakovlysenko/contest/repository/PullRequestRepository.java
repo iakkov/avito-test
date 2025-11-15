@@ -1,11 +1,11 @@
-package ru.iakovlysenko.contest.avitotestdomain.repository;
+package ru.iakovlysenko.contest.repository;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.iakovlysenko.contest.avitotestdomain.entity.PullRequest;
+import ru.iakovlysenko.contest.entity.PullRequest;
 
 import java.util.List;
 import java.util.Optional;
