@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * Реализация сервиса {@link StatisticsService}.
+ *
+ * @author Iakov Lysenko
  */
 @Service
 @RequiredArgsConstructor
@@ -46,4 +48,3 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new StatisticsResponse(assignmentsByUser, reviewersPerPullRequest);
     }
 }
-

@@ -31,4 +31,3 @@ public class StatisticsControllerImpl implements StatisticsControllerApi {
         return ResponseEntity.ok(response);
     }
 }
-

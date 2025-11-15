@@ -4,6 +4,8 @@ import ru.iakovlysenko.contest.dto.response.StatisticsResponse;
 
 /**
  * Сервис для получения статистики по назначениям ревьюверов.
+ *
+ * @author Iakov Lysenko
  */
 public interface StatisticsService {
 
@@ -14,4 +16,3 @@ public interface StatisticsService {
      */
     StatisticsResponse getStatistics();
 }
-

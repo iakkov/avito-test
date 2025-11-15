@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * ДТО ответа со статистикой назначений ревьюверов.
+ *
+ * @author Iakov Lysenko
  */
 public record StatisticsResponse(
         @JsonProperty("assignments_by_user")
@@ -39,4 +41,3 @@ public record StatisticsResponse(
     ) {
     }
 }
-
