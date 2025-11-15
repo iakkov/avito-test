@@ -16,7 +16,10 @@ RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/avito-test-impl/target/*.jar app.jar
+COPY --from=build /app/avito-test-impl/target/*.jar ./
+RUN BOOT_JAR="$(find . -maxdepth 1 -type f -name '*.jar' ! -name 'original-*' -print -quit)" \
+    && mv "${BOOT_JAR}" app.jar \
+    && rm -f original-*.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
