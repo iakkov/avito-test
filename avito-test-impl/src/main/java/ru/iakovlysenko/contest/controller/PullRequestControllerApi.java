@@ -18,17 +18,12 @@ import ru.iakovlysenko.contest.dto.response.ReassignResponse;
  *
  * @author Iakov Lysenko
  */
-@RestController
-@RequestMapping("/pullRequest")
 public interface PullRequestControllerApi {
 
-    @PostMapping("/create")
     ResponseEntity<PullRequestWrapperResponse> createPullRequest(@Valid @RequestBody CreatePullRequestRequest request);
 
-    @PostMapping("/merge")
     ResponseEntity<PullRequestWrapperResponse> mergePullRequest(@Valid @RequestBody MergePullRequestRequest request);
 
-    @PostMapping("/reassign")
     ResponseEntity<ReassignResponse> reassignReviewer(@Valid @RequestBody ReassignRequest request);
 
 }

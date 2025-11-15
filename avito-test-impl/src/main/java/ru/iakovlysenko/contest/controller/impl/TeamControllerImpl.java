@@ -17,6 +17,8 @@ import ru.iakovlysenko.contest.service.TeamService;
  *
  * @author Iakov Lysenko
  */
+@RestController
+@RequestMapping("/team")
 @Slf4j
 @RequiredArgsConstructor
 public class TeamControllerImpl implements TeamControllerApi {
@@ -24,6 +26,7 @@ public class TeamControllerImpl implements TeamControllerApi {
     private final TeamService teamService;
     
     @Override
+    @PostMapping("/add")
     public ResponseEntity<TeamWrapperResponse> createTeam(@Valid @RequestBody TeamRequest request) {
         log.info("POST /team/add - Создание команды: {}", request.teamName());
         
@@ -35,6 +38,7 @@ public class TeamControllerImpl implements TeamControllerApi {
     }
     
     @Override
+    @GetMapping("/get")
     public ResponseEntity<TeamResponse> getTeam(@RequestParam("team_name") String teamName) {
         log.info("GET /team/get - Получение команды: {}", teamName);
         

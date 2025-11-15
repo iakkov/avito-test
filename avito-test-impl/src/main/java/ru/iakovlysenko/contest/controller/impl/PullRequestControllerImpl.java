@@ -19,6 +19,8 @@ import ru.iakovlysenko.contest.service.PullRequestService;
  *
  * @author Iakov Lysenko
  */
+@RestController
+@RequestMapping("/pullRequest")
 @Slf4j
 @RequiredArgsConstructor
 public class PullRequestControllerImpl implements PullRequestControllerApi {
@@ -26,6 +28,7 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     private final PullRequestService pullRequestService;
     
     @Override
+    @PostMapping("/create")
     public ResponseEntity<PullRequestWrapperResponse> createPullRequest(
             @Valid @RequestBody CreatePullRequestRequest request) {
         log.info("POST /pullRequest/create - Создание пулл реквеста: {}", request.pullRequestId());
@@ -38,6 +41,7 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     }
     
     @Override
+    @PostMapping("/merge")
     public ResponseEntity<PullRequestWrapperResponse> mergePullRequest(
             @Valid @RequestBody MergePullRequestRequest request) {
         log.info("POST /pullRequest/merge - Слияние пулл реквеста: {}", request.pullRequestId());
@@ -50,6 +54,7 @@ public class PullRequestControllerImpl implements PullRequestControllerApi {
     }
     
     @Override
+    @PostMapping("/reassign")
     public ResponseEntity<ReassignResponse> reassignReviewer(
             @Valid @RequestBody ReassignRequest request) {
         log.info("POST /pullRequest/reassign - Переназначение ревьювера {} для PR {}", 

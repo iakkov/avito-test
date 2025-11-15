@@ -10,18 +10,11 @@ COPY avito-test-domain/src ./avito-test-domain/src
 COPY avito-test-db/src ./avito-test-db/src
 COPY avito-test-impl/src ./avito-test-impl/src
 
-WORKDIR /app/avito-test-domain
+WORKDIR /app
 RUN mvn clean install -DskipTests
-
-WORKDIR /app/avito-test-db
-RUN mvn clean install -DskipTests
-
-WORKDIR /app/avito-test-impl
-RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/avito-test-impl/target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
-

@@ -18,14 +18,11 @@ import ru.iakovlysenko.contest.dto.response.TeamWrapperResponse;
  *
  * @author Iakov Lysenko
  */
-@RestController
-@RequestMapping("/team")
 public interface TeamControllerApi {
 
-    @PostMapping("/add")
+
     ResponseEntity<TeamWrapperResponse> createTeam(@Valid @RequestBody TeamRequest request);
 
-    @GetMapping("/get")
     ResponseEntity<TeamResponse> getTeam(@RequestParam("team_name") String teamName);
 
 }

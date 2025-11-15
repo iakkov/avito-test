@@ -16,6 +16,8 @@ import ru.iakovlysenko.contest.service.UserService;
  *
  * @author Iakov Lysenko
  */
+@RestController
+@RequestMapping("/users")
 @Slf4j
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserControllerApi {
@@ -23,6 +25,7 @@ public class UserControllerImpl implements UserControllerApi {
     private final UserService userService;
     
     @Override
+    @PostMapping("/setIsActive")
     public ResponseEntity<UserWrapperResponse> setIsActive(@Valid @RequestBody SetIsActiveRequest request) {
         log.info("POST /users/setIsActive - Установка флага активности для пользователя {} в {}", 
                 request.userId(), request.isActive());
@@ -35,6 +38,7 @@ public class UserControllerImpl implements UserControllerApi {
     }
     
     @Override
+    @GetMapping("/getReview")
     public ResponseEntity<GetReviewResponse> getReview(@RequestParam("user_id") String userId) {
         log.info("GET /users/getReview - Получение ревью для пользователя: {}", userId);
         
