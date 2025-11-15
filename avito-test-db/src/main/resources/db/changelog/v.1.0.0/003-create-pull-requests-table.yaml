@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: UUID
+                  type: VARCHAR(255)
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -20,7 +20,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: author_id
-                  type: UUID
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
@@ -39,10 +39,8 @@ databaseChangeLog:
                   type: TIMESTAMP
                   constraints:
                     nullable: true
-        - addCheckConstraint:
-            tableName: pull_requests
-            constraintName: chk_pull_requests_status
-            checkCondition: status IN ('OPEN', 'MERGED')
+        - sql:
+            sql: ALTER TABLE pull_requests ADD CONSTRAINT chk_pull_requests_status CHECK (status IN ('OPEN', 'MERGED'))
         - addForeignKeyConstraint:
             baseTableName: pull_requests
             baseColumnNames: author_id
@@ -66,4 +64,3 @@ databaseChangeLog:
       rollback:
         - dropTable:
             tableName: pull_requests
-

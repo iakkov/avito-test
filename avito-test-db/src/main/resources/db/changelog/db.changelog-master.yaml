@@ -7,4 +7,3 @@ databaseChangeLog:
       file: db/changelog/v.1.0.0/003-create-pull-requests-table.yaml
   - include:
       file: db/changelog/v.1.0.0/004-create-pull-request-reviewers-table.yaml
-
