@@ -270,6 +270,66 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/ErrorResponse' }
 
+  /users:
+    post:
+      tags: [Users]
+      summary: Создать нового пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ id, username, teamName, isActive ]
+              properties:
+                id:
+                  type: string
+                  description: Уникальный идентификатор пользователя
+                username:
+                  type: string
+                  description: Имя пользователя
+                teamName:
+                  type: string
+                  description: Название команды, к которой принадлежит пользователь
+                isActive:
+                  type: boolean
+                  description: Флаг активности пользователя
+            example:
+              id: u1
+              username: usertest
+              teamName: team_test
+              isActive: true
+      responses:
+        '200':
+          description: Пользователь успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                user_id: u1
+                username: usertest
+                team_name: team_test
+                is_active: true
+        '404':
+          description: Команда не найдена
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+              example:
+                error:
+                  code: NOT_FOUND
+                  message: Команда не найдена: team_test
+        '400':
+          description: Ошибка валидации запроса
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+              example:
+                error:
+                  code: VALIDATION_ERROR
+                  message: teamName: must not be blank
+
   /pullRequest/create:
     post:
       tags: [PullRequests]

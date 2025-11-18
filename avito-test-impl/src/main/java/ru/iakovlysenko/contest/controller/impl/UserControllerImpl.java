@@ -6,8 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.iakovlysenko.contest.controller.UserControllerApi;
+import ru.iakovlysenko.contest.dto.request.CreateUserRequest;
 import ru.iakovlysenko.contest.dto.request.SetIsActiveRequest;
 import ru.iakovlysenko.contest.dto.response.GetReviewResponse;
+import ru.iakovlysenko.contest.dto.response.UserResponse;
 import ru.iakovlysenko.contest.dto.response.UserWrapperResponse;
 import ru.iakovlysenko.contest.service.UserService;
 
@@ -23,7 +25,7 @@ import ru.iakovlysenko.contest.service.UserService;
 public class UserControllerImpl implements UserControllerApi {
     
     private final UserService userService;
-    
+
     @Override
     @PostMapping("/setIsActive")
     public ResponseEntity<UserWrapperResponse> setIsActive(@Valid @RequestBody SetIsActiveRequest request) {
@@ -46,5 +48,16 @@ public class UserControllerImpl implements UserControllerApi {
         
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
+        log.info("POST /users - Создание нового пользователя");
+
+        UserResponse response = userService.createUser(createUserRequest);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
 

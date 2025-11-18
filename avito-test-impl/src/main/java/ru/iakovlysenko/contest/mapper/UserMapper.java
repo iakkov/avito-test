@@ -21,7 +21,6 @@ public interface UserMapper {
      * @return ДТО ответа с информацией о пользователе
      */
     @Mapping(target = "userId", source = "id")
-    @Mapping(target = "teamName", expression = "java(user.getTeamName())")
     UserResponse toResponse(User user);
 
 }
