@@ -1,8 +1,10 @@
 package ru.iakovlysenko.contest.service;
 
+import ru.iakovlysenko.contest.dto.request.CreateUserRequest;
 import ru.iakovlysenko.contest.dto.request.SetIsActiveRequest;
 import ru.iakovlysenko.contest.dto.response.GetReviewResponse;
 import ru.iakovlysenko.contest.dto.response.UserResponse;
+import ru.iakovlysenko.contest.exception.NotFoundException;
 
 /**
  * Сервис для работы с пользователями.
@@ -26,5 +28,11 @@ public interface UserService {
      * @return ДТО ответа с информацией о пулл реквестах
      */
     GetReviewResponse getReview(String userId);
+
+    /**
+     * Создает нового пользователя в системе.
+     * Эндпоинт создан в целях тестирования.
+     */
+    UserResponse createUser(CreateUserRequest createUserRequest);
 
 }
